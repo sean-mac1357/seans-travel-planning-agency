@@ -1,49 +1,21 @@
-import Home from "./components/Home";
-import About from './components/About';
-import Login from './components/Login';
-import SignupForm from './components/SignupForm';
-
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+import 'bulma/css/bulma.css';
 
 import './App.css';
 
 function App() {
-  const [reload, setReload] = useState(false);
+  const { isLoading } = useAuth0();
 
-  const handleReload = (status) => {
-    setReload(status);
-  }
+  if (isLoading) return <div>Loading....</div>
 
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <h1>Mac's Travel Itenearies</h1>
-          <p>Map out your perfect getaway with this awesome itenerary builder</p>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/signup">Register</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/signup">
-            <SignupForm handleReload={handleReload} />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className="App">
+      <Router >
+        <NavBar />
+      </Router>
+    </div>
   );
 }
 
